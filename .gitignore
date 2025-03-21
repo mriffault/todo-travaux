@@ -1,6 +1,3 @@
-.composer
-docker-compose.yml
-
 # Symfony
 /docroot/vendor/
 /docroot/var/
@@ -8,10 +5,9 @@ docker-compose.yml
 /docroot/.env.local
 /docroot/.env.local.php
 /docroot/.env.*.local
-/docroot/.env.dev
 
-# Node.js
-/frontend/node_modules/
+# Node.js (pour build)
+/node_modules/
 
 # Éditeurs
 .idea/
