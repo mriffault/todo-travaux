@@ -1,0 +1,20 @@
+# Symfony
+/backend/vendor/
+/backend/var/
+/backend/config/oauth/*.key
+/backend/.env.local
+/backend/.env.local.php
+/backend/.env.*.local
+
+# Node.js
+/frontend/node_modules/
+
+# Éditeurs
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
