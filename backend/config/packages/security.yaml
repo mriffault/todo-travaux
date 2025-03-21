@@ -1,0 +1,36 @@
+# config/packages/security.yaml
+security:
+    enable_authenticator_manager: true
+    password_hashers:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+
+    providers:
+        oauth2_client:
+            id: League\Bundle\OAuth2ServerBundle\Security\User\OAuth2UserProvider
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        api:
+            pattern: ^/api/
+            stateless: true
+            security: true
+            custom_authenticators:
+                - App\Security\OAuth\ClientCredentialsAuthenticator
+        admin:
+            pattern: ^/admin
+            lazy: true
+            provider: oauth2_client
+            form_login:
+                login_path: admin_login
+                check_path: admin_login
+            logout:
+                path: admin_logout
+
+    access_control:
+        - { path: ^/api/docs, roles: PUBLIC_ACCESS }
+        - { path: ^/api/token, roles: PUBLIC_ACCESS }
+        - { path: ^/api/, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/admin/login, roles: PUBLIC_ACCESS }
+        - { path: ^/admin/, roles: ROLE_ADMIN }

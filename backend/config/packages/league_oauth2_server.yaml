@@ -1,0 +1,16 @@
+# config/packages/league_oauth2_server.yaml
+league_oauth2_server:
+    authorization_server:
+        private_key: '%kernel.project_dir%/config/oauth/private.key'
+        private_key_passphrase: null
+        encryption_key: '%env(OAUTH_ENCRYPTION_KEY)%'
+        access_token_ttl: PT1H
+        refresh_token_ttl: P1M
+    resource_server:
+        public_key: '%kernel.project_dir%/config/oauth/public.key'
+    persistence:
+        doctrine: 
+            entity_manager: default
+    scopes:
+        available: ['task:read', 'task:write']
+        default: ['task:read']
