@@ -1,0 +1,15 @@
+{
+  "name": "todo-app-frontend",
+  "version": "1.0.0",
+  "description": "Frontend pour l'application Todo",
+  "main": "index.js",
+  "scripts": {
+    "start": "serve src",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "serve": "^14.0.0"
+  }
+}
