@@ -1,10 +1,14 @@
+.composer
+docker-compose.yml
+
 # Symfony
-/backend/vendor/
-/backend/var/
-/backend/config/oauth/*.key
-/backend/.env.local
-/backend/.env.local.php
-/backend/.env.*.local
+/docroot/vendor/
+/docroot/var/
+/docroot/config/oauth/*.key
+/docroot/.env.local
+/docroot/.env.local.php
+/docroot/.env.*.local
+/docroot/.env.dev
 
 # Node.js
 /frontend/node_modules/

@@ -3,16 +3,23 @@ version: '3.8'
 services:
   # Serveur PHP pour le backend Symfony
   backend:
-    image: php:8.1-apache
+    build: docker/web
     container_name: todo_backend
     volumes:
-      - ./backend:/var/www/html
+      - .:/var/www
     ports:
       - "8000:80"
     environment:
-      - APP_ENV=dev
-      - DATABASE_URL=mysql://todo_user:todo_password@db:3306/todo_app
-      - OAUTH_ENCRYPTION_KEY=def00000aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+      APP_ENV: dev
+      DATABASE_URL: "mysql://todo_user:todo_password@db:3306/todo_app"
+      OAUTH_ENCRYPTION_KEY: abcd
+      SERVERNAME: api.labelleadresse.local
+      SERVERALIAS: api.labelleadresse.local
+      DOCUMENTROOT: docroot/public
+      PHP_IDE_CONFIG: "serverName=api.labelleadresse.local"
+      XDEBUG_CONFIG: "client_host=host.docker.internal"
+      XDEBUG_SESSION: "PHPSTORM"
+      APP_SECRET: 123456
     depends_on:
       - db
 
@@ -31,7 +38,6 @@ services:
   db:
     image: mysql:8.0
     container_name: todo_db
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root_password
       MYSQL_DATABASE: todo_app
@@ -41,19 +47,6 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-
-  # PhpMyAdmin pour administrer la base de données
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: todo_phpmyadmin
-    restart: always
-    ports:
-      - "8080:80"
-    environment:
-      PMA_HOST: db
-      MYSQL_ROOT_PASSWORD: root_password
-    depends_on:
-      - db
 
 volumes:
   mysql_data:
