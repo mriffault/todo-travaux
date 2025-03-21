@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  # Serveur PHP pour le backend Symfony avec image personnalisée
+  backend:
+    image: mriffault/php-symfony:latest
+    container_name: todo_backend
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - "8000:80"
+    environment:
+      - APP_ENV=dev
+      - DATABASE_URL=mysql://todo_user:todo_password@db:3306/todo_app
+      - OAUTH_ENCRYPTION_KEY=def00000aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    depends_on:
+      - db
+
+  # Base de données MySQL
+  db:
+    image: mysql:8.0
+    container_name: todo_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: todo_app
+      MYSQL_USER: todo_user
+      MYSQL_PASSWORD: todo_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  # PhpMyAdmin pour administrer la base de données
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: todo_phpmyadmin
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: root_password
+    depends_on:
+      - db
+
+volumes:
+  mysql_data:
